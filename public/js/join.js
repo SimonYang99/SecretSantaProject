@@ -1,17 +1,4 @@
-
-document.getElementById("host").addEventListener("click", function(){
-    hostEnter();
-});
-
-
-
-function hostEnter(){
-    enterInfo(true).then(res => {
-        setTimeout(function(){
-            window.location.href = `room/host/${res}`;
-        }, 2000);
-    });
-}
+enterInfo(false);
 
 function enterInfo(host){
     return new Promise((resolve, reject) => {
@@ -29,10 +16,10 @@ function enterInfo(host){
             }
         ]).then((result) => {
             console.log(result);
-            send_data('host', {name: result.value[0], email: result.value[1]}).then(res => {
+            send_data('join', {name: result.value[0], email: result.value[1], room: document.getElementById("roomKey").textContent}).then(res => {
                 console.log(res);
                 populateStorage(result.value[0], result.value[1], host);
-                resolve(res.room);
+                resolve();
             });
         });
     });
@@ -46,6 +33,7 @@ function send_data(link, to_send){
             body: JSON.stringify(to_send)
         }).then(response => response.json())
             .then(data => {
+                console.log(data)
                 resolve(data);
             });
     });

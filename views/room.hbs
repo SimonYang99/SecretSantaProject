@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+
+<body>
+    <h1 id="roomKey">{{room}}</h1>
+    <table id="room">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each people}}
+                <tr>
+                    <td>{{this.name}}</td>
+                    <td>{{this.email}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div>
+    <input type="text" value="" id="invitelink">
+    <button onclick="copyToClipboard()">Copy</button>
+    </div>
+    
+    <script src="/js/room.js"></script>
+    {{#unless host}}
+        <script src="/js/join.js"></script>
+    {{/unless}}
+</body>

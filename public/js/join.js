@@ -1,4 +1,6 @@
-enterInfo(false);
+if(localStorage.getItem("roomkey") != document.getElementById("roomkey").textContent){
+    enterInfo(false);
+}
 
 function enterInfo(host){
     return new Promise((resolve, reject) => {
@@ -18,7 +20,7 @@ function enterInfo(host){
             console.log(result);
             send_data('join', {name: result.value[0], email: result.value[1], room: document.getElementById("roomKey").textContent}).then(res => {
                 console.log(res);
-                populateStorage(result.value[0], result.value[1], host);
+                populateStorage(result.value[0], result.value[1], host, res.room);
                 resolve();
             });
         });
@@ -33,14 +35,15 @@ function send_data(link, to_send){
             body: JSON.stringify(to_send)
         }).then(response => response.json())
             .then(data => {
-                console.log(data)
+                console.log(data);
                 resolve(data);
             });
     });
 }
 
-function populateStorage(name, email, host){
+function populateStorage(name, email, host, roomkey){
     localStorage.setItem("name", name);
     localStorage.setItem("email", email);
     localStorage.setItem("host", host);
+    localStorage.setItem("roomkey", roomkey);
 }

@@ -7,6 +7,8 @@ const bodyparser = require("body-parser");
 const db = require("./modules/database");
 const randomstring = require("randomstring");
 const hbs = require("hbs");
+const randomizer = require("./modules/randomizer");
+const mailer = require("./modules/mailer");
 
 hbs.registerHelper('json', function(contect){
     return JSON.stringify(context);
@@ -58,6 +60,19 @@ app.post("/join", (req, res) => {
     db.create_user(req.body.name, req.body.email, req.body.room);
     res.send({status : "OK", room: req.body.room});
 });
+
+app.post("/start", (req, res) => {
+    console.log(req.body);
+    db.get_users(req.body.room).then((resolve) => {
+        randomizer.randomizeNames(resolve.rows, resolve.rows.slice(0)).then((resp) => {
+            mailer.mailList(resp).then((resolve2) => {
+                
+            });
+            res.send({status : "OK", room: req.body.room});
+        });
+    });
+});
+
 
 app.listen(port, () => {
     // tslint:disable-next-line:no-console

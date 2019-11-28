@@ -27,6 +27,12 @@
     <input type="text" value="" id="invitelink">
     <button onclick="copyToClipboard()">Copy</button>
     </div>
+
+    {{#if host}}
+    <div>
+        <button onclick="start()">Start</button>
+    </div>
+    {{/if}}
     
     <script src="/js/room.js"></script>
     {{#unless host}}

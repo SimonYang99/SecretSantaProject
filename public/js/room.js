@@ -12,6 +12,20 @@ function getTabledata(){
     });
 }
 
+function start(){
+    return new Promise((resolve, reject) => {
+        fetch('/start', {
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify({room: localStorage.getItem("roomstring")})
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                resolve(data);
+            });
+    });
+}
+
 function copyToClipboard(){
     var copyText = document.getElementById("invitelink");
     copyText.select();

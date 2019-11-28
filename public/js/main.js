@@ -31,7 +31,7 @@ function enterInfo(host){
             console.log(result);
             send_data('host', {name: result.value[0], email: result.value[1]}).then(res => {
                 console.log(res);
-                populateStorage(result.value[0], result.value[1], host);
+                populateStorage(result.value[0], result.value[1], host, res.room);
                 resolve(res.room);
             });
         });
@@ -51,8 +51,9 @@ function send_data(link, to_send){
     });
 }
 
-function populateStorage(name, email, host){
+function populateStorage(name, email, host, roomstring){
     localStorage.setItem("name", name);
     localStorage.setItem("email", email);
     localStorage.setItem("host", host);
+    localStorage.setItem("roomstring", roomstring);
 }

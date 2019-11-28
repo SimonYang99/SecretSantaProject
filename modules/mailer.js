@@ -12,15 +12,15 @@ function mailList(arrayList){
 const transport = nodemailer.createTransport({
     service: "Outlook",
     auth: {
-        user: "seawingwangyum@outlook.com",
-        pass: "Ww)/a9hKD@P/rC]n",
+        user: process.env.EMAIL,
+        pass: process.env.EMAILPASS,
     }
 });
 
 function send_mail(nameList){
     return new Promise ((resolve, reject) => {
         var mailOptions = {
-            from: "seawingwangyum@outlook.com",
+            from: process.env.EMAIL,
             to: nameList.senderEmail,
             subject: 'Secret Santa',
             text: `Congratulations ${nameList.sender} you have to buy a present for ${nameList.reciever}!`

@@ -1,4 +1,4 @@
-if(localStorage.getItem("roomkey") != document.getElementById("roomkey").textContent){
+if(localStorage.getItem("roomkey") != document.getElementById("roomKey").textContent){
     enterInfo(false);
 }
 

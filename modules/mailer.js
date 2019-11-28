@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 
 function mailList(arrayList){
     return new Promise(async (resolve) => {
-        var promiseStack = [];
         for(let i in arrayList){
             await send_mail(arrayList[i]);
         }

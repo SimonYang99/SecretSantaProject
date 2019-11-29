@@ -1,10 +1,3 @@
-
-document.getElementById("host").addEventListener("click", function(){
-    hostEnter();
-});
-
-
-
 function hostEnter(){
     enterInfo(true).then(res => {
         setTimeout(function(){

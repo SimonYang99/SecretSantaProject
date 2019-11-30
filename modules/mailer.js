@@ -35,6 +35,7 @@ function send_mail(nameList){
             transport.close();
             resolve();
         });
+        resolve();
     });
 }
 

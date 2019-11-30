@@ -9,6 +9,8 @@ const randomstring = require("randomstring");
 const hbs = require("hbs");
 const randomizer = require("./modules/randomizer");
 const mailer = require("./modules/mailer");
+const Cryptr = require("cryptr");
+const cryptr = new Cryptr(process.env.SECRET);
 
 hbs.registerHelper('json', function(contect){
     return JSON.stringify(context);
@@ -64,10 +66,11 @@ app.post("/join", (req, res) => {
 app.post("/start", (req, res) => {
     console.log(req.body);
     db.get_users(req.body.room).then((resolve) => {
-        randomizer.randomizeNames(resolve.rows, resolve.rows.slice(0)).then((resp) => {
+        randomizer.randomizeNames(resolve.rows, resolve.rows.slice(0)).then(async (resp) => {
             mailer.mailList(resp).then((resolve2) => {
                 
             });
+            await db.delete_room(req.body.room);
             res.send({status : "OK", room: req.body.room});
         });
     });
@@ -75,6 +78,6 @@ app.post("/start", (req, res) => {
 
 
 app.listen(port, () => {
-    // tslint:disable-next-line:no-console
     console.log(`Server started at http://localhost: ${ port }`);
 });
+

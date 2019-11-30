@@ -3,7 +3,8 @@ if(localStorage.getItem("roomkey") != document.getElementById("roomKey").textCon
     .catch((err) => {
         swal.fire({
             icon: 'error',
-            title: 'Bad Username/Email'
+            backdrop: false,
+            title: 'Bad Input'
         }).then(()=> {
             window.location = `/`;
         });

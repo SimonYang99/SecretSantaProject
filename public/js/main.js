@@ -6,7 +6,8 @@ function hostEnter(){
     }).catch((err) => {
         swal.fire({
             icon: 'error',
-            title: 'Bad Username/Email'
+            backdrop: false,
+            title: 'Bad Input'
         });
     });
 }

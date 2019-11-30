@@ -1,5 +1,13 @@
 if(localStorage.getItem("roomkey") != document.getElementById("roomKey").textContent){
-    enterInfo(false);
+    enterInfo(false)
+    .catch((err) => {
+        swal.fire({
+            icon: 'error',
+            title: 'Bad Username/Email'
+        }).then(()=> {
+            window.location = `/`;
+        });
+    });
 }
 
 function enterInfo(host){
@@ -17,14 +25,36 @@ function enterInfo(host){
                 title: 'Email'
             }
         ]).then((result) => {
-            console.log(result);
-            send_data('join', {name: result.value[0], email: result.value[1], room: document.getElementById("roomKey").textContent}).then(res => {
-                console.log(res);
-                populateStorage(result.value[0], result.value[1], host, res.room);
-                resolve();
-            });
+            if(!result.dismiss){
+                if(checkEmail(result.value[1])){
+                    send_data('join', {name: result.value[0], email: result.value[1], room: document.getElementById("roomKey").textContent}).then(res => {
+                        console.log(res);
+                        populateStorage(result.value[0], result.value[1], host, res.room);
+                        resolve();
+                    })
+                    .catch((err) => {
+                        reject();
+                    });
+                }
+                else{
+                    reject();
+                }
+            }
+            else{
+                reject();
+            }
+
         });
     });
+}
+
+function checkEmail(email){
+    if(email.search("@") != -1){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 function send_data(link, to_send){
@@ -35,8 +65,13 @@ function send_data(link, to_send){
             body: JSON.stringify(to_send)
         }).then(response => response.json())
             .then(data => {
-                console.log(data);
-                resolve(data);
+                if(data.status == "OK"){
+                    console.log(data);
+                    resolve(data);
+                }
+                else{
+                    reject();
+                }
             });
     });
 }

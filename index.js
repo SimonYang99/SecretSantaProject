@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const fs = require("fs");
 const engine = require("consolidate");
 const express = require("express");
 const path = require("path");
@@ -9,13 +10,12 @@ const randomstring = require("randomstring");
 const hbs = require("hbs");
 const randomizer = require("./modules/randomizer");
 const mailer = require("./modules/mailer");
-const Cryptr = require("cryptr");
-const cryptr = new Cryptr(process.env.SECRET);
 
 hbs.registerHelper('json', function(contect){
     return JSON.stringify(context);
 });
 
+const badStrings = fs.readFileSync(`${__dirname}/naughtyStrings.txt`);
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -53,14 +53,25 @@ app.get("/room/:user/:id", async function(req, res) {
 app.post("/host", (req, res) => {
     console.log(req.body);
     let room = randomstring.generate(10);
-    db.create_user(req.body.name, req.body.email, room);
-    res.send({status : "OK", room: room});
+    if(!checkBadstring(req.body.name)){
+        db.create_user(req.body.name, req.body.email, room);
+        res.send({status : "OK", room: room});
+    }
+    else{
+        res.send({status: "ERROR: Bad Name"});
+    }
+
 });
 
 app.post("/join", (req, res) => {
     console.log(req.body);
-    db.create_user(req.body.name, req.body.email, req.body.room);
-    res.send({status : "OK", room: req.body.room});
+    if(!checkBadstring(req.body.name)){
+        db.create_user(req.body.name, req.body.email, req.body.room);
+        res.send({status : "OK", room: req.body.room});
+    }
+    else{
+        res.send({status: "ERROR: Bad Name"});
+    }
 });
 
 app.post("/start", (req, res) => {
@@ -81,3 +92,11 @@ app.listen(port, () => {
     console.log(`Server started at http://localhost: ${ port }`);
 });
 
+function checkBadstring(name){
+    if(badStrings.includes(name)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}

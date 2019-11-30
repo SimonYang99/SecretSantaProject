@@ -28,7 +28,7 @@ const create_user = async (username, email, room) => {
 };
 
 const delete_room = async (room) => {
-    // return await runQuery(`DELETE FROM users WHERE room = $1`, [room]);
+    return await runQuery(`DELETE FROM users WHERE room = $1`, [room]);
 };
 
 const get_users = async (room) => {

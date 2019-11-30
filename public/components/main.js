@@ -1,6 +1,6 @@
 
 ReactDOM.render(
-    <div className="container text-center my-4 ">
+    <div id="panel" className="container text-center my-4 p-5">
         <div className="row">
         <h1 className="col">Secret Santa</h1>
         </div>

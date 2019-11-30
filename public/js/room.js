@@ -21,7 +21,13 @@ function start(){
         }).then(response => response.json())
             .then(data => {
                 console.log(data);
-                resolve(data);
+                swal.fire({
+                   icon: 'success',
+                   title: 'Emails have been sent',
+                   backdrop: false, 
+                }).then(() => {
+                    window.location = `/`;
+                });
             });
     });
 }

@@ -15,6 +15,7 @@ function enterInfo(host){
     return new Promise((resolve, reject) => {
         swal.mixin({
             input: 'text',
+            backdrop: false,
             confirmButtonText: 'Next',
             showCancelButton: true,
             progressSteps: ['1', '2']

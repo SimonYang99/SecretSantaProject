@@ -34,13 +34,11 @@ app.get("/", (req, res) => {
 
 app.get("/room/:user/:id", async function(req, res) {
     db.get_users(req.params.id).then((resolve) => {
-        console.log(resolve.rows.length)
         if(resolve.rows.length === 0){
             res.redirect("/");
         }
         else{
             let host = (req.params.user === "host")? true : false;
-            console.log(host);
             res.render("room.hbs", {
                 room : req.params.id,
                 people: resolve.rows,

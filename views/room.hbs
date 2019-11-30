@@ -1,39 +1,53 @@
 <!DOCTYPE html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css" />
 </head>
 
 <body>
-    <h1 id="roomKey">{{room}}</h1>
-    <table id="room">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each people}}
-                <tr>
-                    <td>{{this.name}}</td>
-                    <td>{{this.email}}</td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <div>
-    <input type="text" value="" id="invitelink">
-    <button onclick="copyToClipboard()">Copy</button>
+    <div id="navbar">
+    </div>
+    <div id="mainWindow">
+        <div id="panel" class="container text-center py-4">
+            <div class="row">
+                <h1 id="roomKey" class="col">{{room}}</h1>
+            </div>
+            <div class="row mx-3 text-center">
+                <table id="room" class="col table text-center table-light">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each people}}
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.email}}</td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row mx-3">
+                <input type="text" value="" class="col-10 form-control" id="invitelink">
+                <button onclick="copyToClipboard()" class="col-2 btn btn-primary">Copy</button>
+            </div>
+            {{#if host}}
+            <div class="row m-3">
+                <button class="col btn btn-primary" onclick="start()">Start</button>
+            </div>
+            {{/if}}
+        </div>
+
     </div>
 
-    {{#if host}}
-    <div>
-        <button onclick="start()">Start</button>
-    </div>
-    {{/if}}
-    
+    <script type="text/babel" src="/components/navbar.js"></script>
     <script src="/js/room.js"></script>
     {{#unless host}}
         <script src="/js/join.js"></script>

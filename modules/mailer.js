@@ -5,11 +5,12 @@ function mailList(arrayList){
         for(let i in arrayList){
             await send_mail(arrayList[i]);
         }
+        resolve();
     });
 }
 
 const transport = nodemailer.createTransport({
-    service: "Outlook",
+    service: "gmail",
     auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAILPASS,

@@ -76,11 +76,10 @@ app.post("/start", (req, res) => {
     console.log(req.body);
     db.get_users(req.body.room).then((resolve) => {
         randomizer.randomizeNames(resolve.rows, resolve.rows.slice(0)).then(async (resp) => {
-            mailer.mailList(resp).then((resolve2) => {
-                
+            mailer.mailList(resp).then(async(resolve2) => {
+                await db.delete_room(req.body.room);
+                res.send({status : "OK", room: req.body.room});
             });
-            await db.delete_room(req.body.room);
-            res.send({status : "OK", room: req.body.room});
         });
     });
 });

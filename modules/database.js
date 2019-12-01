@@ -33,7 +33,6 @@ const delete_room = async (room) => {
 
 const get_users = async (room) => {
     let info = await runQuery(`SELECT name, email FROM users where room = $1`, [room]);
-    let decrypt_info = [];
     for(let i = 0 ; i < info.rows.length; i++){
         info.rows[i].email = cryptr.decrypt(info.rows[i].email);
     }

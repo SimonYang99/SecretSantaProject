@@ -24,7 +24,7 @@ function send_mail(nameList){
             subject: 'Secret Santa',
             text: `Congratulations ${nameList.sender} you have to buy a present for ${nameList.reciever}!`
         };
-        
+        // 'Secret Santa'
         transport.sendMail(mailOptions, (error, info) => {
             if(error) {
                 return console.log('Error while sending mail: ' + error); 

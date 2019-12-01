@@ -17,7 +17,7 @@ function start(){
         fetch('/start', {
             method: "POST",
             headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({room: localStorage.getItem("roomstring")})
+            body: JSON.stringify({room: document.getElementById("roomKey").textContent})
         }).then(response => response.json())
             .then(data => {
                 console.log(data);
